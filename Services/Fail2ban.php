@@ -104,4 +104,15 @@ class Fail2ban extends AbstractService
             return 'stopped';
         }
     }
+
+    public function version(): string
+    {
+        try {
+            $result = $this->service->server->ssh()->exec('sudo fail2ban-client version');
+
+            return trim($result);
+        } catch (\Exception $e) {
+            return 'latest';
+        }
+    }
 }
