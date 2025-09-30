@@ -27,10 +27,10 @@ class Fail2ban extends AbstractService
         return [
             'type' => [
                 function (string $attribute, mixed $value, Closure $fail): void {
-                    $existingFail2ban = $this->service->server->services()
+                    $existingService = $this->service->server->services()
                         ->where('name', self::id())
-                        ->first();
-                    if ($existingFail2ban) {
+                        ->exists();
+                    if ($existingService) {
                         $fail('Fail2Ban is already installed on this server.');
                     }
                 },
