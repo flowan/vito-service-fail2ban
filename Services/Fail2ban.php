@@ -41,7 +41,7 @@ class Fail2ban extends AbstractService
     public function install(): void
     {
         $this->service->server->ssh()->exec(
-            'sudo apt-get update -y && sudo apt-get install -y fail2ban',
+            view('vito-service-fail2ban::install-fail2ban'),
             'install-fail2ban'
         );
 
@@ -54,14 +54,8 @@ class Fail2ban extends AbstractService
 
     public function uninstall(): void
     {
-        if ($this->status() === 'running') {
-            $this->stop();
-        }
-
-        $this->disable();
-
         $this->service->server->ssh()->exec(
-            'sudo apt-get remove -y fail2ban',
+            view('vito-service-fail2ban::uninstall-fail2ban'),
             'uninstall-fail2ban'
         );
 
