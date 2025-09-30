@@ -6,6 +6,7 @@ use App\Plugins\AbstractPlugin;
 use App\Plugins\RegisterServiceType;
 use App\Plugins\RegisterViews;
 use App\Vito\Plugins\Flowan\VitoServiceFail2ban\Services\Fail2ban;
+use Illuminate\Support\Facades\Artisan;
 
 class Plugin extends AbstractPlugin
 {
@@ -27,5 +28,11 @@ class Plugin extends AbstractPlugin
                 'latest',
             ])
             ->register();
+    }
+
+    public function enable(): void
+    {
+        // Temporary fix until this is fixed in vito, see https://github.com/vitodeploy/vito/issues/842
+        dispatch(fn () => Artisan::call('horizon:terminate'));
     }
 }
